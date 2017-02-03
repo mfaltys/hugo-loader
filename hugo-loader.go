@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 
 	"github.com/unixvoid/glogger"
 	"gopkg.in/gcfg.v1"
@@ -14,6 +16,7 @@ type Config struct {
 		Loglevel   string
 		S3endpoint string
 		Authfile   string
+		Sourcedir  string
 	}
 }
 
@@ -27,6 +30,18 @@ func main() {
 
 	// init logger
 	initLogger()
+
+	// chdir and run hugo packager
+	os.Chdir(config.Hloader.Sourcedir)
+	cmd := exec.Command("hugo")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	if err != nil {
+		glogger.Error.Println("error running 'hugo'")
+	}
+	// print output
+	glogger.Debug.Printf("%s\n", out.String())
 }
 
 func readConf() {
