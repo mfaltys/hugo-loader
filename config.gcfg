@@ -1,0 +1,4 @@
+[hloader]
+	loglevel		= "debug"
+	s3endpoint		= "s3://unixvoid/"
+	authfile		= "auth"
