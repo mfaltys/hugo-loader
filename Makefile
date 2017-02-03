@@ -12,7 +12,7 @@ dependencies:
 	go get gopkg.in/gcfg.v1
 
 run:
-	go run hugo-loader
+	go run hugo-loader.go
 
 stat:
 	$(CGOR) $(GOC) $(GOFLAGS) hugo-loader.go
